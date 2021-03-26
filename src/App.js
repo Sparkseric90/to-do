@@ -9,16 +9,16 @@ class App extends React.Component {
     this.state = {
       sortStatus: 'current',
       value: '',
-      
+
     }
-       
+
   }
 
   componentDidMount() {
     //console.log('mounted');
     this.currentTaskList = JSON.parse(localStorage.getItem('list'));
-    // //if no data set to empty string
-    if (!this.currentTaskList) {this.currentTaskList= []};     
+    // if no data set to empty string
+    if (!this.currentTaskList) { this.currentTaskList = [] };
 
   }
   componentDidUpdate() {
@@ -41,29 +41,29 @@ class App extends React.Component {
     taskItem.task = this.state.value;
     taskItem.status = 'current';
     taskItem.id = Date.now();
-    console.log(taskItem);  
-    this.currentTaskList.push(taskItem);  
-    this.setState({value: ''});
+    console.log(taskItem);
+    this.currentTaskList.push(taskItem);
+    this.setState({ value: '' });
     localStorage.setItem('list', JSON.stringify(this.currentTaskList));
   }
-  
+
   render() {
     return (
       <div className="container">
-        <Heading title="Sparks 3D Designs" />
-        <div className="row">
+        <div className="row text-center">
+        <Heading title="Sparks 3D Designs To-Do:" />
           <div className="col-12 border text-center">
             <form onSubmit={this.handleSubmit}>
-              <label>New task:<input type="text" value={this.state.value} onChange={this.handleChange}/></label>
+              <label>New task:<input type="text" value={this.state.value} onChange={this.handleChange} /></label>
               <input type="submit" value="Submit" />
             </form>
           </div>
         </div>
         <div className="row">
           <div className="col text-center">
-            <button onClick={this.handleClick} data-id="current" className="btn btn-outline-secondary" >Current tasks </button>
-            <button onClick={this.handleClick} data-id="complete" className="btn btn-outline-secondary">Complete tasks </button>
-            <button onClick={this.handleClick} data-id="all" className="btn btn-outline-secondary">All tasks</button>
+              <button onClick={this.handleClick} data-id="current" className="btn btn-outline-secondary" >Current tasks </button>
+              <button onClick={this.handleClick} data-id="complete" className="btn btn-outline-secondary">Complete tasks </button>
+              <button onClick={this.handleClick} data-id="all" className="btn btn-outline-secondary">All tasks</button>
           </div>
         </div>
         <Display sortStatus={this.state.sortStatus} />

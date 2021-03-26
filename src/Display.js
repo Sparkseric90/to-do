@@ -14,32 +14,31 @@ function Display(props) {
     sortedList = itemList.filter(item => props.sortStatus === 'all' || item.status === props.sortStatus);
 
 
-
+    //Moves completed task to the completed tab
     const completeTask = (e) => {
         let index = itemList.findIndex(x => x.id === parseInt(e.target.dataset.id));
         itemList[index].status = 'complete';
         localStorage.setItem('list', JSON.stringify(itemList));
     }
-
+    //Delete doesn't work yet
     const deleteTask = (e) => {
-        let index = itemList.findIndex(x => x.id === parseInt(e.target.dataset.id));
-        itemList[index].status = 'deleted';
-        localStorage.setItem('list', JSON.stringify(itemList));
+        let store = JSON.parse(localStorage.getItem("itemsArray")) || [];
+        for (let i = 0; i < store.length; i++) {
+            store.splice(i, 1);
+            localStorage.setItem('itemsArray', JSON.stringify(store));
+        }
     }
 
     return (
         <div className="row text-center">
-            <div className="col">
-                <ol>
+            <div className="row">
                     {sortedList.map((item, index) =>
                         <li key={index}>
                             {item.task}
                             ({item.status})
-                            <button onClick={completeTask} data-id={item.id} type="button" className="btn btn-success btn-sm">Done</button>
-                            <button onClick={deleteTask} data-id={item.id} type="button" className="btn btn-danger btn-sm">Del</button>
-                            
-                        </li>)}
-                </ol>
+                            <button onClick={completeTask} data-id={item.id} type="button" className="btn btn-outline-success">Done</button>
+                            <button onClick={deleteTask} data-id={item.id} type="button" className="btn btn-outline-danger">Del</button>
+                            </li>)}
                 <p>You have {sortedList.length} task in the "{props.sortStatus}" list!</p>
             </div>
         </div>

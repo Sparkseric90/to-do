@@ -10,7 +10,7 @@ function Nav(props) {
     
 
     return (
-        <div className="col">
+        <div className="row">
             <button onClick={handleClick} key="current" className="btn btn-outline-secondary">{props.button.current} </button>
             <button onClick={handleClick} key="complete" className="btn btn-outline-secondary">{props.button.complete} </button>
         </div>
